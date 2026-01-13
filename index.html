@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS | Enterprise Analytics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+    <style>
+        :root {
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        
+        body {
+            font-family: var(--font-display);
+            background-color: #050505;
+            color: #e4e4e7;
+            overflow-x: hidden;
+        }
+
+        .font-mono {
+            font-family: var(--font-mono);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item:hover .nav-line {
+            width: 100%;
+            background-color: #6366f1;
+        }
+
+        .image-overlay {
+            background: linear-gradient(180deg, rgba(5,5,5,0) 0%, rgba(5,5,5,1) 100%);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Main Layout Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] min-h-screen">
+
+        <!-- LEFT RAIL (Sticky/Fixed) -->
+        <aside class="hidden lg:flex flex-col justify-between h-screen sticky top-0 border-r border-white/5 bg-[#08080a] p-8 z-50">
+            <div>
+                <div class="mb-12 group cursor-pointer">
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 bg-indigo-500 rounded-sm group-hover:shadow-[0_0_10px_rgba(99,102,241,0.8)] transition-all duration-300"></div>
+                        <span class="font-bold text-xl tracking-tighter text-white">NEXUS_</span>
+                    </div>
+                    <p class="font-mono text-[10px] text-zinc-500 mt-1 uppercase tracking-widest">Intelligence Layer v2.0</p>
+                </div>
+
+                <nav class="space-y-6">
+                    <a href="#" class="nav-item block group">
+                        <div class="flex items-center justify-between text-zinc-400 group-hover:text-white transition-colors">
+                            <span class="text-sm font-medium">Platform</span>
+                            <i class="fa-solid fa-arrow-right text-[10px] opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all"></i>
+                        </div>
+                        <div class="nav-line h-[1px] w-0 bg-zinc-800 mt-2 transition-all duration-300"></div>
+                    </a>
+                    <a href="#" class="nav-item block group">
+                        <div class="flex items-center justify-between text-zinc-400 group-hover:text-white transition-colors">
+                            <span class="text-sm font-medium">Solutions</span>
+                            <i class="fa-solid fa-arrow-right text-[10px] opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all"></i>
+                        </div>
+                        <div class="nav-line h-[1px] w-0 bg-zinc-800 mt-2 transition-all duration-300"></div>
+                    </a>
+                    <a href="#" class="nav-item block group">
+                        <div class="flex items-center justify-between text-zinc-400 group-hover:text-white transition-colors">
+                            <span class="text-sm font-medium">Developers</span>
+                            <i class="fa-solid fa-arrow-right text-[10px] opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all"></i>
+                        </div>
+                        <div class="nav-line h-[1px] w-0 bg-zinc-800 mt-2 transition-all duration-300"></div>
+                    </a>
+                </nav>
+            </div>
+
+            <div>
+                <div class="font-mono text-xs text-zinc-600 mb-6 space-y-2">
+                    <div class="flex justify-between">
+                        <span>SYSTEM</span>
+                        <span class="text-emerald-500">ONLINE</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>LATENCY</span>
+                        <span>12ms</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>UPTIME</span>
+                        <span>99.99%</span>
+                    </div>
+                </div>
+                <button class="w-full py-3 border border-white/20 hover:bg-white hover:text-black hover:border-white transition-all duration-300 font-medium text-sm tracking-wide uppercase">
+                    Request Access
+                </button>
+            </div>
+        </aside>
+
+        <!-- MOBILE HEADER (Visible only on small screens) -->
+        <header class="lg:hidden flex justify-between items-center p-6 border-b border-white/10 bg-[#08080a] sticky top-0 z-50">
+            <span class="font-bold text-xl tracking-tighter text-white">NEXUS_</span>
+            <button class="text-white">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </header>
+
+        <!-- RIGHT SCROLLABLE CONTENT -->
+        <main class="relative">
+            
+            <!-- HERO SECTION -->
+            <section class="relative min-h-[90vh] flex flex-col justify-end p-6 lg:p-20 overflow-hidden">
+                <!-- Background Image -->
+                <div class="absolute inset-0 z-0">
+                    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80" 
+                         alt="Abstract Technology Grid" 
+                         class="w-full h-full object-cover opacity-30 grayscale hover:grayscale-0 transition-all duration-[2s] scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent"></div>
+                </div>
+
+                <div class="relative z-10 max-w-4xl">
+                    <div class="inline-flex items-center gap-3 px-3 py-1 border border-indigo-500/30 rounded-full bg-indigo-500/10 mb-8 reveal">
+                        <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+                        <span class="font-mono text-xs text-indigo-300 tracking-wider">INTELLIGENCE ENGINE V2.0 LIVE</span>
+                    </div>
+                    
+                    <h1 class="text-6xl lg:text-9xl font-bold tracking-tighter leading-[0.9] mb-8 text-white reveal" style="transition-delay: 100ms;">
+                        DECODE<br>
+                        THE NOISE.
+                    </h1>
+                    
+                    <div class="flex flex-col md:flex-row gap-12 items-start reveal" style="transition-delay: 200ms;">
+                        <p class="text-zinc-400 text-lg lg:text-xl max-w-md leading-relaxed">
+                            Transform raw data into predictive clarity. Nexus provides the backbone for next-generation enterprise decision making.
+                        </p>
+                        <div class="flex flex-col gap-2 font-mono text-sm text-zinc-500">
+                            <div class="flex items-center gap-4">
+                                <i class="fa-solid fa-check text-emerald-500"></i>
+                                <span>Real-time ingestion</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <i class="fa-solid fa-check text-emerald-500"></i>
+                                <span>Zero-latency query</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STATS TICKER -->
+            <div class="border-y border-white/10 overflow-hidden bg-black py-4">
+                <div class="flex gap-12 whitespace-nowrap animate-marquee">
+                    <!-- Repeated items for marquee effect (simulated via static for now, usually needs JS or CSS keyframes) -->
+                    <div class="flex gap-12 font-mono text-sm text-zinc-500 uppercase tracking-widest">
+                        <span>/// Processing: 45.2 TB/s</span>
+                        <span>/// Nodes Active: 8,492</span>
+                        <span>/// Threat Level: Low</span>
+                        <span>/// Encryption: AES-256</span>
+                        <span>/// Global Latency: 14ms</span>
+                        <span>/// Processing: 45.2 TB/s</span>
+                        <span>/// Nodes Active: 8,492</span>
+                        <span>/// Threat Level: Low</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FEATURES GRID -->
+            <section class="p-6 lg:p-20">
+                <div class="mb-20 reveal">
+                    <h2 class="text-4xl lg:text-5xl font-bold mb-6">Architecture of <span class="text-indigo-500">Insight</span></h2>
+                    <div class="h-1 w-20 bg-indigo-500"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Card 1 -->
+                    <div class="glass-panel p-10 group hover:bg-white/5 transition-all duration-500 reveal">
+                        <div class="h-12 w-12 bg-white/5 rounded-full flex items-center justify-center mb-8 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-bolt text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Instant Query</h3>
+                        <p class="text-zinc-400 leading-relaxed mb-8">
+                            Query petabytes of data with sub-second latency. Our columnar storage engine is optimized for high-concurrency environments.
+                        </p>
+                        <div class="font-mono text-xs text-indigo-400 flex items-center gap-2">
+                            READ_DOCS(QUERY_ENGINE) <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="glass-panel p-10 group hover:bg-white/5 transition-all duration-500 reveal" style="transition-delay: 100ms;">
+                        <div class="h-12 w-12 bg-white/5 rounded-full flex items-center justify-center mb-8 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-network-wired text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Neural Mapping</h3>
+                        <p class="text-zinc-400 leading-relaxed mb-8">
+                            Automatically visualize relationships between disparate datasets. Discover hidden correlations without writing a single join.
+                        </p>
+                        <div class="font-mono text-xs text-indigo-400 flex items-center gap-2">
+                            READ_DOCS(GRAPH_API) <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="glass-panel p-10 group hover:bg-white/5 transition-all duration-500 reveal">
+                        <div class="h-12 w-12 bg-white/5 rounded-full flex items-center justify-center mb-8 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-shield-halved text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Sovereign Security</h3>
+                        <p class="text-zinc-400 leading-relaxed mb-8">
+                            Enterprise-grade encryption at rest and in transit. Granular role-based access control down to the row level.
+                        </p>
+                        <div class="font-mono text-xs text-indigo-400 flex items-center gap-2">
+                            READ_DOCS(SECURITY) <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 (Image Card) -->
+                    <div class="glass-panel relative overflow-hidden group reveal" style="transition-delay: 100ms;">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80" alt="Data Dashboard" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                        <div class="relative z-10 p-10 h-full flex flex-col justify-end">
+                            <h3 class="text-2xl font-bold mb-2">Visual Command</h3>
+                            <p class="text-zinc-400 text-sm">Build stunning dashboards in minutes.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BIG IMAGE BREAK -->
+            <section class="w-full h-[60vh] relative reveal overflow-hidden">
+                 <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80" alt="Block Chain Abstract" class="absolute inset-0 w-full h-full object-cover grayscale opacity-60">
+                 <div class="absolute inset-0 flex items-center justify-center">
+                     <div class="text-center">
+                         <p class="font-mono text-sm text-indigo-400 mb-4 tracking-[0.2em]">SCALE WITHOUT LIMITS</p>
+                         <h2 class="text-5xl lg:text-8xl font-bold text-white tracking-tighter">100M+</h2>
+                         <p class="text-zinc-400 mt-2">Events Processed / Second</p>
+                     </div>
+                 </div>
+            </section>
+
+            <!-- FINAL CTA -->
+            <section class="p-6 lg:p-20 py-32 bg-[#08080a] border-t border-white/5">
+                <div class="max-w-2xl reveal">
+                    <h2 class="text-4xl lg:text-6xl font-bold mb-8 leading-tight">
+                        Ready to optimize your <span class="text-zinc-600">infrastructure?</span>
+                    </h2>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="px-8 py-4 bg-indigo-600 text-white font-bold tracking-wide hover:bg-indigo-500 transition-all duration-300 shadow-[0_0_20px_rgba(79,70,229,0.3)]">
+                            START FREE TRIAL
+                        </button>
+                        <button class="px-8 py-4 border border-white/10 text-white font-mono hover:bg-white hover:text-black transition-all duration-300">
+                            SCHEDULE DEMO
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FOOTER -->
+            <footer class="border-t border-white/10 p-6 lg:p-12 bg-black">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+                    <div class="col-span-1">
+                        <span class="font-bold text-lg tracking-tighter text-white">NEXUS_</span>
+                        <p class="text-zinc-500 mt-4">© 2024 Nexus Analytics Inc.</p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <span class="font-mono text-zinc-500 mb-2">PRODUCT</span>
+                        <a href="#" class="text-zinc-300 hover:text-indigo-400 transition-colors">Features</a>
+                        <a href="#" class="text-zinc-300 hover:text-indigo-400 transition-colors">Pricing</a>
+                        <a href="#" class="text-zinc-300 hover:text-indigo-400 transition-colors">API</a>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <span class="font-mono text-zinc-500 mb-2">COMPANY</span>
+                        <a href="#" class="text-zinc-300 hover:text-indigo-400 transition-colors">About</a>
+                        <a href="#" class="text-zinc-300 hover:text-indigo-400 transition-colors">Careers</a>
+                        <a href="#" class="text-zinc-300 hover:text-indigo-400 transition-colors">Legal</a>
+                    </div>
+                     <div class="flex flex-col gap-2">
+                        <span class="font-mono text-zinc-500 mb-2">SOCIAL</span>
+                        <a href="#" class="text-zinc-300 hover:text-indigo-400 transition-colors">Twitter / X</a>
+                        <a href="#" class="text-zinc-300 hover:text-indigo-400 transition-colors">GitHub</a>
+                        <a href="#" class="text-zinc-300 hover:text-indigo-400 transition-colors">Discord</a>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // Intersection Observer for Scroll Reveals
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+<script>
+  let inspectorMode = false;
+  let hoveredElement = null;
+  let selectedElement = null;
+  
+  window.addEventListener('message', (event) => {
+    if (event.data?.type === 'SET_INSPECTOR_MODE') {
+      inspectorMode = event.data.enabled;
+      document.body.style.cursor = inspectorMode ? 'crosshair' : 'default';
+    }
+    
+    if (event.data?.type === 'LOCAL_UPDATE' && selectedElement) {
+      const update = event.data.update;
+      
+      if (update.text !== undefined) {
+        selectedElement.innerText = update.text;
+      }
+      
+      if (update.styles) {
+        Object.entries(update.styles).forEach(([prop, value]) => {
+          selectedElement.style[prop] = value;
+        });
+      }
+    }
+  });
+  
+  document.addEventListener('mouseover', (e) => {
+    if (!inspectorMode) return;
+    if (hoveredElement && hoveredElement !== selectedElement) {
+      hoveredElement.style.outline = '';
+    }
+    hoveredElement = e.target;
+    if (hoveredElement !== selectedElement) {
+      hoveredElement.style.outline = '2px solid #06b6d4';
+    }
+  });
+  
+  document.addEventListener('mouseout', (e) => {
+    if (!inspectorMode || !hoveredElement) return;
+    if (hoveredElement !== selectedElement) {
+      hoveredElement.style.outline = '';
+    }
+  });
+  
+  document.addEventListener('click', (e) => {
+    if (!inspectorMode) return;
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (selectedElement) {
+      selectedElement.style.outline = '';
+    }
+    
+    const el = e.target;
+    selectedElement = el;
+    el.style.outline = '3px solid #06b6d4';
+    
+    const rect = el.getBoundingClientRect();
+    const styles = window.getComputedStyle(el);
+    
+    window.parent.postMessage({
+      type: 'ELEMENT_SELECTED',
+      element: {
+        tagName: el.tagName.toLowerCase(),
+        text: el.innerText?.substring(0, 500) || '',
+        className: el.className || '',
+        styles: {
+          color: styles.color,
+          backgroundColor: styles.backgroundColor,
+          fontSize: styles.fontSize,
+          fontWeight: styles.fontWeight,
+          padding: styles.padding,
+          margin: styles.margin,
+        },
+        rect: {
+          top: rect.top,
+          left: rect.left,
+          width: rect.width,
+          height: rect.height,
+        },
+        selector: el.id ? '#' + el.id : (el.className ? '.' + el.className.split(' ')[0] : el.tagName.toLowerCase())
+      }
+    }, '*');
+  }, true);
+</script>
+</body>
+</html>
